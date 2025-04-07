@@ -3,44 +3,25 @@ variable "compartment_id" {
   type        = string
 }
 
-variable "fingerprint" {
-  description = "The fingerprint of the key to use for signing"
-  type        = string
+variable "ampere_ad_number" {
+  description = "Availabiliby Domain number for Ampere instances"
+  type        = number
 }
 
-variable "private_key" {
-  description = "Private key to use for signing"
+variable "cloudflare_api_token" {
+  description = "API token used to access basic Cloudflare APIs"
   type        = string
-}
-
-variable "private_key_password" {
-  description = "Password for private key to use for signing"
-  type        = string
+  default     = null
 }
 
 variable "region" {
-  description = "The region to connect to. Default: eu-frankfurt-1"
+  description = "The region to connect to."
   type        = string
-  default     = "eu-frankfurt-1"
-}
-
-variable "tenancy_ocid" {
-  description = "The tenancy OCID."
-  type        = string
-}
-
-variable "user_ocid" {
-  description = "The user OCID."
-  type        = string
+  default     = null
 }
 
 variable "ssh_authorized_keys" {
   description = "List of authorized SSH keys"
-  type        = list(any)
+  type        = list(string)
+  default     = []
 }
-
-locals {
-  cidr_blocks            = ["10.0.0.0/24"]
-  ssh_managemnet_network = "1.1.1.1/32"
-}
-

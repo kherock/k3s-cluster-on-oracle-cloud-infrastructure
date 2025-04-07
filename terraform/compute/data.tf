@@ -1,23 +1,33 @@
-data "oci_identity_availability_domain" "ad_1" {
-  compartment_id = var.tenancy_ocid
-  ad_number      = 1
+data "oci_core_images" "ubuntu_minimal" {
+  for_each = {
+    x86_64  = "22.04 Minimal"
+    aarch64 = "22.04 Minimal aarch64"
+  }
+
+  compartment_id = var.compartment_id
+
+  operating_system         = "Canonical Ubuntu"
+  operating_system_version = each.value
+  sort_by                  = "TIMECREATED"
+  state                    = "AVAILABLE"
 }
 
-data "oci_identity_availability_domain" "ad_2" {
-  compartment_id = var.tenancy_ocid
-  ad_number      = 2
+data "oci_core_images" "oracle_linux" {
+  for_each = {
+    x86_64  = var.oracle_linux_x86_64_image
+    aarch64 = var.oracle_linux_aarch64_image
+  }
+
+  compartment_id = var.compartment_id
+
+  display_name     = each.value
+  sort_by          = "TIMECREATED"
+  state            = "AVAILABLE"
 }
 
-data "oci_identity_availability_domain" "ad_3" {
-  compartment_id = var.tenancy_ocid
-  ad_number      = 3
-}
+data "oci_identity_availability_domain" "ad" {
+  for_each = toset(["1", "2", "3"])
 
-resource "random_string" "cluster_token" {
-  length           = 48
-  special          = true
-  numeric          = true
-  lower            = true
-  upper            = true
-  override_special = "^@~*#%/.+:;_"
+  compartment_id = var.compartment_id
+  ad_number      = each.key
 }
