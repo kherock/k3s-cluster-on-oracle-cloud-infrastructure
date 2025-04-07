@@ -3,57 +3,52 @@ variable "compartment_id" {
   type        = string
 }
 
-variable "tenancy_ocid" {
-  description = "The tenancy OCID."
-  type        = string
-}
-
 variable "cluster_subnet_id" {
   description = "Subnet for the bastion instance"
   type        = string
 }
 
-variable "permit_ssh_nsg_id" {
+variable "cluster_vault_id" {
+  description = "KMS Vault ID for storing cluster secrets"
+  type        = string
+}
+
+variable "cluster_master_key_id" {
+  description = "KMS Vault master key ID for storing cluster secrets"
+  type        = string
+}
+
+variable "ampere_ad_number" {
+  description = "Availabiliby Domain number for Ampere instances"
+  type        = number
+}
+
+variable "nsg_id" {
   description = "NSG to permit SSH"
+  type        = string
+}
+
+variable "cluster_lb_san" {
+  description = "The fixed IP/DNS of the cluster"
+  type        = string
+}
+
+variable "cluster_lb_private_ip" {
+  description = "The fixed IP/DNS of the cluster"
   type        = string
 }
 
 variable "ssh_authorized_keys" {
   description = "List of authorized SSH keys"
-  type        = list(any)
+  type        = list(string)
 }
 
-
-variable "cidr_blocks" {
-  description = "CIDRs of the network, use index 0 for everything"
-  type        = list(any)
+variable "oracle_linux_aarch64_image" {
+  description = "Oracle Linux image description from https://docs.oracle.com/en-us/iaas/images/oracle-linux-9x/"
+  default = "Oracle-Linux-9.5-aarch64-2025.01.31-0"
 }
 
-locals {
-  ampere_instance_config = {
-    shape_id = "VM.Standard.A1.Flex"
-    ocpus    = 2
-    ram      = 12
-
-    // Canonical-Ubuntu-22.04-Minimal-aarch64-2022.11.05-0 eu-frankfurt-1
-    source_id   = "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaapb65ywn23pl6t6dzc2bk56k4azbvnmsndcr6bfmn5eoei5toc53a"
-    source_type = "image"
-
-    metadata = {
-      "ssh_authorized_keys" = join("\n", var.ssh_authorized_keys)
-    }
-  }
-  micro_instance_config = {
-    shape_id = "VM.Standard.E2.1.Micro"
-    ocpus    = 1
-    ram      = 1
-
-    // Canonical-Ubuntu-22.04-Minimal-aarch64-2022.11.05-0 eu-frankfurt-1
-    source_id   = "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaapb65ywn23pl6t6dzc2bk56k4azbvnmsndcr6bfmn5eoei5toc53a"
-    source_type = "image"
-
-    metadata = {
-      "ssh_authorized_keys" = join("\n", var.ssh_authorized_keys)
-    }
-  }
+variable "oracle_linux_x86_64_image" {
+  description = "Oracle Linux image description from https://docs.oracle.com/en-us/iaas/images/oracle-linux-9x/"
+  default = "Oracle-Linux-9.5-Minimal-2025.01.31-0"
 }
