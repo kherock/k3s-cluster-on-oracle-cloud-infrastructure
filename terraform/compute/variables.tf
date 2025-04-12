@@ -45,10 +45,10 @@ variable "ssh_authorized_keys" {
 
 variable "oracle_linux_aarch64_image" {
   description = "Oracle Linux image description from https://docs.oracle.com/en-us/iaas/images/oracle-linux-9x/"
-  default = "Oracle-Linux-9.5-aarch64-2025.01.31-0"
+  default = "Oracle-Linux-9.5-aarch64-2025.03.18-0"
 }
 
 variable "oracle_linux_x86_64_image" {
   description = "Oracle Linux image description from https://docs.oracle.com/en-us/iaas/images/oracle-linux-9x/"
-  default = "Oracle-Linux-9.5-Minimal-2025.01.31-0"
+  default = "Oracle-Linux-9.5-2025.03.18-0"
 }
